@@ -1,0 +1,164 @@
+* {
+    font-family: "Inter", sans-serif;
+    font-weight: normal;
+}
+
+#list-notification {
+    pointer-events: none;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    top: 0;
+    z-index: 20;
+}
+
+#notification {
+    opacity: 0;
+    scale: 87%;
+    transition: opacity 0.2s ease-out, scale 0.2s ease-out;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 384px;
+    margin: 16px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0px 2px 12px #00000030;
+    padding: 12px;
+}
+
+#notification.appear {
+    opacity: 1;
+    scale: 100%;
+}
+
+#notification-icon-container {
+    width: 32px;
+    height: 32px;
+}
+
+.notification-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    color: white;
+}
+
+#notification p {
+    margin-top: -4px;
+    margin-bottom: -4px;
+    margin-left: 12px;
+}
+
+.login-background {
+    background: url(./Assets/image/cody-chan-TYg-HVGkLc8-unsplash.jpg) no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #909090;
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sheet {
+    background-color: #ffffffe0;
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+}
+
+.title {
+    text-align: center;
+    font-weight: 600;
+    font-size: 32px;
+    margin: 0;
+}
+
+.header {
+    text-align: center;
+    font-weight: 600;
+    color: #F24822;
+    font-size: 20px;
+    margin: 0;
+}
+
+.input-group-text {
+    border-top-left-radius: 12px !important;
+    border-bottom-left-radius: 12px !important;
+}
+
+.form-control {
+    border-top-right-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+}
+
+button {
+    border-radius: 12px !important;
+}
+
+.button-primary {
+    cursor: pointer;
+    transition: scale 0.2s, background-color 0.2s;
+    height: 40px;
+    padding-left: 12px;
+    padding-right: 12px;
+    color: white;
+    background-color: #F24822;
+    border: none;
+}
+
+.button-primary:hover {
+    background-color: #D43F1D;
+}
+
+.button-primary:active {
+    scale: 94%;
+}
+
+.button-secondary {
+    cursor: pointer;
+    transition: scale 0.2s, background-color 0.2s;
+    height: 40px;
+    padding-left: 12px;
+    padding-right: 12px;
+    color: #F24822;
+    background-color: inherit;
+    border: none;
+}
+
+.button-secondary:hover {
+    background-color: #00000010;
+}
+
+.button-secondary:active {
+    scale: 94%;
+}
+
+@media only screen and (min-width: 481px) {
+    .sheet {
+        padding: 32px;
+        margin: 32px;
+        width: 448px;
+        border-radius: 16px;
+        box-shadow: 0px 2px 12px #00000030;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .sheet {
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-top: 32px;
+        padding-bottom: 32px;
+        margin: 0;
+        width: 100vw;
+        min-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+    }
+}

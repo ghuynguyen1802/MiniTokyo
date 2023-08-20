@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384- IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900">
+    <link rel="stylesheet" href="./style-admin.css">
+    <title>Mini Tokyo - Admin</title>
+    <link rel="icon" type="image/x-icon" href="./assets/image/Logo-favicon.png">
+</head>
+
+<body>
+    <div class="background">
+        <div id="list-notification" style="display: none">
+            <div id="notification">
+                <div id="notification-icon-container">
+                    
+                </div>
+                <p id="notification-text"></p>
+            </div>
+        </div>
+        <div class="modal fade" id="viewProductFile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Xem file</h1>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <textarea class="form-control" id="productListFile" rows="10"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="button button-modal" id="cancelViewProductJson" data-bs-dismiss="modal">Xong</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Thêm món ăn</h1>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-type" viewBox="0 0 16 16">
+                                <path d="m2.244 13.081.943-2.803H6.66l.944 2.803H8.86L5.54 3.75H4.322L1 13.081h1.244zm2.7-7.923L6.34 9.314H3.51l1.4-4.156h.034zm9.146 7.027h.035v.896h1.128V8.125c0-1.51-1.114-2.345-2.646-2.345-1.736 0-2.59.916-2.666 2.174h1.108c.068-.718.595-1.19 1.517-1.19.971 0 1.518.52 1.518 1.464v.731H12.19c-1.647.007-2.522.8-2.522 2.058 0 1.319.957 2.18 2.345 2.18 1.06 0 1.716-.43 2.078-1.011zm-1.763.035c-.752 0-1.456-.397-1.456-1.244 0-.65.424-1.115 1.408-1.115h1.805v.834c0 .896-.752 1.525-1.757 1.525z"/>
+                            </svg>
+                        </div>
+                        <input type="text" class="form-control" id="product-name-input" placeholder="Tên" style="font-weight: 600">
+                    </div>
+                    <div class="row g-3">
+                        <div class="input-group col mb-3">
+                            <div class="input-group-text">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cash" viewBox="0 0 16 16">
+                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/>
+                                </svg>
+                            </div>
+                            <input type="text" class="form-control" id="product-price-input" placeholder="Giá (VND)" style="font-weight: 600" oninput="checkInputNumber('product-price-input')">
+                        </div>
+                        <div class="input-group col mb-3">
+                            <div class="input-group-text">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+                                    <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"/>
+                                </svg>
+                            </div>
+                            <input type="text" class="form-control" id="product-type-input" placeholder="Loại" style="font-weight: 600; color: #0D99FF">
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-justify-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+                            </svg>
+                        </div>
+                        <input type="text" class="form-control" id="product-description-input" placeholder="Mô tả">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+                                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+                            </svg>
+                        </div>
+                        <input type="text" class="form-control" id="product-image-link-input" placeholder="Link ảnh">
+                    </div>
+                    <select class="form-select mb-3" id='product-size-input'>
+                        <option value="medium" selected>Cỡ vừa</option>
+                        <option value="wide">Cỡ rộng</option>
+                    </select>
+                    <div style="display: flex; justify-content: center;">
+                        <div class="example-item-product-grid">
+                            <div class="example-item-product" style="grid-column: span 4; width: 100%; background-color: #FFA629">
+                                <p class="example-text">Cỡ rộng</p>
+                            </div>
+                            <div class="example-item-product" style="background-color: #FFA629">
+                                <p class="example-text">Cỡ vừa</p>
+                            </div>
+                            <div class="example-item-product" style="background-color: #FCD19C"></div>
+                            <div class="example-item-product" style="background-color: #FCD19C"></div>
+                            <div class="example-item-product" style="background-color: #FCD19C"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="button button-secondary button-modal" id="cancelProductModal" data-bs-dismiss="modal">Huỷ</button>
+                    <button class="button button-modal" onclick="createProduct()">OK</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Thêm tài khoản</h1>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                            </svg>
+                        </span>
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="username-input" placeholder="Username or email">
+                            <label for="floatingInputGroup1">Username hoặc email</label>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+                                <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+                            </svg>
+                        </span>
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="password-input" placeholder="Password">
+                            <label for="floatingInputGroup1">Mật khẩu</label>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                            </svg>
+                        </span>
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="confirm-password-input" placeholder="Confirm password">
+                            <label for="floatingInputGroup1">Xác nhận mật khẩu</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="button button-secondary button-modal" id="cancelAccountModal" data-bs-dismiss="modal">Huỷ</button>
+                    <button class="button button-modal" onclick="createAccount()">OK</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="sidebar-tab" onclick="toggleSidebar()" id="hamburger">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black"
+                class="bi bi-list" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+            </svg>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <img src="./assets/image/Logo-favicon.png" alt="" style="width: 28px; height: 28px; margin-top: -2px; margin-bottom: 2px;">
+                <p style="font-size: 16pt; margin-left: 8px; margin-top: 0; margin-bottom: 0;">
+                    <span style="font-weight: 600; color: #F24822">Mini Tokyo</span>
+                    Admin</p>
+            </div>
+            <div class="sidebar-tab-selected" id="page-1-tab" onclick="changePage('page-1')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-speedometer2" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
+                    <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z"/>
+                  </svg>
+                <p class="sidebar-tab-label">Bảng điều khiển</p>
+            </div>
+            <div class="sidebar-tab" id="page-2-tab" onclick="changePage('page-2')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                  </svg>
+                <p class="sidebar-tab-label">Thực đơn</p>
+            </div>
+            <div class="sidebar-tab" id="page-3-tab" onclick="changePage('page-3')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                  </svg>
+                <p class="sidebar-tab-label">Tài khoản</p>
+            </div>
+            <div class="account-bar">
+                <div class="sidebar-tab-static" style="position: relative; padding: 0">
+                    <div class="avatar" id="sidebar-avatar" style="width: 48px; height: 48px"></div>
+                    <div style="margin-left: 8px;">
+                        <p style="margin: 0; font-size: 18px; font-weight: 600;" id="username"></p>
+                        <p style="margin: 0; font-size: 16px; color: #606060" id="account-type"></p>
+                    </div>
+                    <p style="position: absolute; bottom: 3px; right: 0; margin: 0; width: 100%; text-align: right;">Version 1.0.0</p>
+                </div>
+            </div>
+        </div>
+        <div id="sidebar-dim" onclick="toggleSidebar()"></div>
+        <div class="content" id="content">
+            <div class="toolbar" id="content-toolbar">
+                <p id="toolbar-title" class="invisible"></p>
+                <div class="toolbar-button" onclick="location.href = './index.html'">
+                    <p class="toolbar-button-label">Trang chủ</p>
+                </div>
+            </div>
+            <div class="page" id="page-1">
+                <p class="title" id="page-1-title">Chào <span id="part-of-day" class="title"></span>, <span id="dashboard-username" class="title"></p>
+                <div class="tile-container">
+                    <div class="info-tile" style="background-color: #BDE3FF;">
+                        <p class="tile-title" style="color: #0D99FF;" id="total-ordered"></p>
+                        <p class="tile-header" style="color: #0D99FF;">Món ăn đã được đặt</p>
+                    </div>
+                    <div class="info-tile" style="background-color: #AFF4C6;">
+                        <p class="tile-title" style="color: #14AE5C;" id="most-ordered"></p>
+                        <p class="tile-header" style="color: #14AE5C;">Được đặt nhiều nhất</p>
+                    </div>
+                    <div class="info-tile" style="background-color: #FFC7C2;">
+                        <p class="tile-title" style="color: #F24822;" id="least-ordered"></p>
+                        <p class="tile-header" style="color: #F24822;">Được đặt ít nhất</p>
+                    </div>
+                </div>
+                <p class="header">Lịch sử đơn hàng</p>
+                <div class="table-container">
+                    <table id="order-history">
+                        
+                    </table>
+                </div>
+            </div>
+            <div class="hidden page" id="page-2">
+                <p class="title" id="page-2-title">Thực đơn</p>
+                <div class="header-group">
+                    <p class="header">Tất cả món ăn</p>
+                    <div class="header-button-group">
+                        <button class="button button-secondary" data-bs-toggle="modal" data-bs-target="#viewProductFile">Xem file</button>
+                        <button class="button" data-bs-toggle="modal" data-bs-target="#addProductModal">Thêm món ăn</button>
+                    </div>
+                </div>
+                <div class="product-container" id="product-list">
+
+                </div>
+            </div>
+            <div class="hidden page" id="page-3">
+                <p class="title" id="page-3-title">Tài khoản</p>
+                <div class="header-group">
+                    <p class="header">Danh sách tài khoản</p>
+                    <div class="header-button-group">
+                        <button class="button" data-bs-toggle="modal" data-bs-target="#addAccountModal">Thêm tài khoản</button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="account-list">
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./admin.js"></script>
+</body>
+
+</html>

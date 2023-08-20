@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384- IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900">
+    <title>Mini Tokyo</title>
+    <link rel="icon" type="image/x-icon" href="./assets/image/Logo-favicon.png">
+</head>
+
+<body>
+    <div id="list-notification" style="display: none">
+        <div id="notification">
+            <div id="notification-icon-container">
+
+            </div>
+            <p id="notification-text"></p>
+        </div>
+    </div>
+    <div class="hidden invisible" id="hamburger-menu-dim" onclick="toggleHamburger()"></div>
+    <div class="hidden" id="account-menu-dim" onclick="toggleAccountMenu()"></div>
+    <div class="modal fade" id="viewDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" id="details-content">
+            
+        </div>
+        </div>
+    </div>
+    <ul class="fixed" id="bar">
+        <div class="bar-content">
+            <li class="nav-bar-tab" id="hamburger" onclick="toggleHamburger()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                    class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                </svg>
+            </li>
+            <li class="nav-bar" onclick="changePage('page-1')">
+                <img src="./assets/image/Logo1.png" alt="" class="logo">
+            </li>
+            <div class="bar-group">
+                <li class="nav-bar-tab-selected" id="page-1-tab" onclick="changePage('page-1')">Trang chủ</li>
+                <li class="nav-bar-tab" id="page-2-tab" onclick="changePage('page-2')">Giới thiệu</li>
+                <li class="nav-bar-tab" id="page-3-tab" onclick="changePage('page-3')" style="position: relative;">
+                    <div class="nav-bar-menu" id="nav-bar-menu-list">
+
+                    </div>
+                    Thực đơn</li>
+                <li class="nav-bar-tab" id="page-4-tab" onclick="changePage('page-4')" style="position: relative;">
+                    <span id="counter" class="hidden"></span>
+                    Giỏ hàng
+                </li>
+                <li class="nav-bar search" id="search-bar" style="display: flex;">
+                    <input placeholder="Tìm kiếm" id="search">
+                    <button onclick="searchItem()" style="display: flex; align-items: center">
+                        <img src="./assets/image/search.png" alt="" style="width: 24px; height: 24px;">
+                    </button>
+                </li>
+                <li class="nav-bar avatar" id="nav-bar-avatar" onclick="toggleAccountMenu()">
+                    <div class="account-menu a-m-disappear hidden" id="account-menu">
+                        <div style="display: flex; align-items: center; margin-bottom: 4px; padding: 4px">
+                            <div class="avatar" id="account-menu-avatar" style="width: 48px; height: 48px"></div>
+                            <div style="margin-left: 8px;">
+                                <p style="margin: 0; line-height: 1.25; font-size: 18px; font-weight: 600;" id="username"></p>
+                                <p style="margin: 0; line-height: 1.25; font-size: 16px; color: #606060" id="account-type"></p>
+                            </div>
+                        </div>
+                        <div class="account-menu-tab" id="account-settings" onclick="changePage('page-account')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+                                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+                            </svg>
+                            <p class="account-menu-tab-label">Cài đặt tài khoản</p>
+                        </div>
+                        <div class="account-menu-tab" id="admin-page" onclick="location.href = './admin.html'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-speedometer2" viewBox="0 0 16 16">
+                                <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
+                                <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z"/>
+                            </svg>
+                            <p class="account-menu-tab-label">Trang admin</p>
+                        </div>
+                        <div class="account-menu-tab" id="login" onclick="location.href = './login.html'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                            </svg>
+                            <p class="account-menu-tab-label">Đăng nhập</p>
+                        </div>
+                        <div class="account-menu-tab" id="signup" onclick="location.href = './signup.html'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                            </svg>
+                            <p class="account-menu-tab-label">Đăng ký</p>
+                        </div>
+                        <div class="account-menu-tab" id="logout" onclick="logout()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-dash" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1Zm0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                            </svg>
+                            <p class="account-menu-tab-label">Đăng xuất</p>
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </ul>
+    <div class="hamburger-menu h-m-disappear hidden" id="hamburger-menu">
+        <div class="page-content-container">
+            <div class="page-content" style="display: flex; flex-direction: column; gap: 16px;">
+                <div class="nav-bar search" style="display: flex;">
+                    <input placeholder="Tìm kiếm" id="search-mobile">
+                    <button onclick="searchItem(); toggleHamburger()" style="display: flex; align-items: center">
+                        <img src="./assets/image/search.png" alt="" style="width: 24px; height: 24px;">
+                    </button>
+                </div>
+                <p class="menu-tab" onclick="changePage('page-1'); toggleHamburger()">Trang chủ</p>
+                <p class="menu-tab" onclick="changePage('page-2'); toggleHamburger()">Giới thiệu</p>
+                <p class="menu-tab" onclick="changePage('page-3'); toggleHamburger()">Thực đơn</p>
+                <p class="menu-tab" onclick="changePage('page-4'); toggleHamburger()">Giỏ hàng</p>
+            </div>
+        </div>
+    </div>
+    <div id="page-1">
+        <div class="page-content-container" id="scroll">
+            <div class="page-content s-c-disappear" id="scroll-content">
+                <h1 class="title" style="color: white">Chào mừng đến với Mini Tokyo!</h1>
+                <p class="header" style="color: #ffffffd0">Những món ăn hấp dẫn đang chờ đón bạn</p>
+                <button class="button" onclick="changePage('page-3')">Xem thực đơn</button>
+            </div>
+        </div>
+        <div id="scroll-background-container">
+            <div id="scroll-background">
+
+            </div>
+        </div>
+        <div class="page-content-container">
+            <div class="page-content">
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <h1 class="title centered" style="color: #F24822">Mini Tokyo</h1>
+                <p class="header centered" style="margin-bottom: 32px;">Đậm chất hương vị Nhật</p>
+                <p class="body body-centered">Mini Tokyo là một nhà hàng phục vụ những món ăn đến từ Nhật Bản cho khách hàng với mức giá cạnh
+                    tranh. Từ sashimi, sushi và tempura cho đến các món khai vị, bạn có thể dễ dàng tìm thấy món ăn yêu thích của
+                    mình tại Mini Tokyo. Bên cạnh đó, mỗi lần bạn đặt một món ăn từ chúng tôi, 5% số tiền của món ăn đó
+                    sẽ được quyên góp để chống lại nạn đói ở châu Phi.</p>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+            </div>
+        </div>
+        <div class="page-content-container" style="background-color: #f0f0f0">
+            <div class="page-content circle-image-container">
+                <div>
+                    <p class="header" style="margin-bottom: 32px; color: #F24822">Vì sao nên chọn chúng tôi?</p>
+                    <p class="body">Tuy nhà hàng Mini Tokyo mới được thành lập gần đây, chúng
+                        tôi được hàng nghìn khách hàng trên thành phố tin tưởng và thưởng thức những món ăn của Mini
+                        Tokyo mỗi ngày. Mọi món ăn của chúng tôi đã được đảm bảo an toàn tuyệt đối cho sức khoẻ và được
+                        kiểm soát chất lượng nghiêm ngặt.
+                    </p>
+                </div>
+                <div class="circle-image"></div>
+            </div>
+        </div>
+        <div class="page-content-container banner-background" id="quote">
+            <div class="page-content">
+                <p class="header centered" style="color: white">Tôi đã sớm nhận ra sức mạnh của thức
+                    ăn trong việc khơi gợi ký ức, gắn kết mọi người lại với nhau, đưa bạn đến những nơi khác và tôi muốn
+                    trở thành một phần trong đó</p>
+                <p class="header centered" style="font-weight: 600; color: #FFA629;">José Andrés Puerta</p>
+            </div>
+        </div>
+    </div>
+    <div class="hidden" id="page-2">
+        <div class="page-content-container">
+            <div class="page-content">
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <h1 class="title centered">Giới thiệu</h1>
+                <p class="header centered" style="margin-bottom: 32px;">Mini Tokyo</p>
+                <p class="body body-centered">Là những người cực kỳ
+                    quan tâm đến khách hàng, chúng tôi luôn đặt câu hỏi: "Những nhà hàng khác làm ra món ăn là vì khách
+                    hàng hay vì lợi nhuận?" Được thành lập ở Thành phố Hồ Chí Minh, Mini Tokyo đặt mục tiêu cung cấp
+                    những món ăn Nhật có giá cả hợp lý và luôn quan tâm tới khách hàng.</p>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+            </div>
+        </div>
+        <div class="slideshow">
+            <div class="slideshow-space" style="background-color: #808080"></div>
+            <div class="image-slideshow appear" id="slide-1" style="background: url('./assets/image/manuel-cosentino-n--CMLApjfI-unsplash.jpg') no-repeat; background-position: center; background-size: cover;"></div>
+            <div class="image-slideshow" id="slide-2" style="background: url('./assets/image/vincent-camacho-0PnQQ4hp_u8-unsplash.jpg') no-repeat; background-position: center; background-size: cover;"></div>
+            <div class="image-slideshow" id="slide-3" style="background: url('./assets/image/ca-creative-kC9KUtSiflw-unsplash.jpg') no-repeat; background-position: center; background-size: cover;"></div>
+            <div class="image-slideshow" id="slide-4" style="background: url('./assets/image/thomas-marban-EHK-EH1SRzQ-unsplash.jpg') no-repeat; background-position: center; background-size: cover;"></div>
+            <div class="image-slideshow" id="slide-5" style="background: url('./assets/image/mahmoud-fawzy-BOJ8RP7-VQA-unsplash.jpg') no-repeat; background-position: center; background-size: cover;"></div>
+            <div class="slideshow-space" style="position: absolute; top: 0; align-items: center">
+                <button class="slide-button-nav" id="back-slideshow" onclick="backSlide()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                      </svg>
+                </button>
+                <div style="width: 100%"></div>
+                <button class="slide-button-nav" id="forward-slideshow" onclick="forwardSlide()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                      </svg>
+                </button>
+            </div>
+            <div class="slide-button-page-container">
+                <button class="slide-button-page on-slide" id="tab-slide-1" onclick="changeSlide(1)"></button>
+                <button class="slide-button-page" id="tab-slide-2" onclick="changeSlide(2)"></button>
+                <button class="slide-button-page" id="tab-slide-3" onclick="changeSlide(3)"></button>
+                <button class="slide-button-page" id="tab-slide-4" onclick="changeSlide(4)"></button>
+                <button class="slide-button-page" id="tab-slide-5" onclick="changeSlide(5)"></button>
+            </div>
+        </div>
+        <div class="page-content-container" style="background-color: #f0f0f0">
+            <div class="page-content">
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <p class="header" style="font-size: 48px; font-weight: 600; margin-bottom: 32px; color: #F24822; text-align: center">Giá trị của chúng tôi</p>
+                <div class="card-container">
+                    <div class="info-card">
+                        <div class="card-image" style="background: url('./assets/image/beth-macdonald-fVlojghjHTA-unsplash.jpg') no-repeat; background-position: center; background-size: cover;">
+                        
+                        </div>
+                        <div class="card-content">
+                            <div class="card-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#F24822" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                </svg>
+                                <p class="card-title" style="color: #F24822">Tận tình</p>
+                            </div>
+                            <p class="card-body">Đối với chúng tôi, việc tận tình với khách
+                                hàng luôn được đề cao. Bằng những dịch vụ cao cấp, chúng tôi luôn muốn khách hàng hài lòng
+                                khi thưởng thức những món ăn của Mini Tokyo.</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-image" style="background: url('./assets/image/pexels-sora-shimazaki-5673488.jpg') no-repeat; background-position: center; background-size: cover;">
+                        
+                        </div>
+                        <div class="card-content">
+                            <div class="card-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#0D99FF" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                  </svg>
+                                <p class="card-title" style="color: #0D99FF">Minh bạch</p>
+                            </div>
+                            <p class="card-body">Mọi khía cạnh về công ty của chúng tôi đều
+                                được thể hiện rõ ràng trên trang web. Mỗi khi chúng tôi tính thuế hoặc thay đổi giá bán,
+                                Mini Tokyo luôn tránh việc ẩn đi những chi phí hoặc tự động trừ tiền</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-image" style="background: url('./assets/image/lukasz-szmigiel-jFCViYFYcus-unsplash.jpg') no-repeat; background-position: center; background-size: cover;">
+                        
+                        </div>
+                        <div class="card-content">
+                            <div class="card-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#14AE5C" class="bi bi-globe-asia-australia" viewBox="0 0 16 16">
+                                    <path d="m10.495 6.92 1.278-.619a.483.483 0 0 0 .126-.782c-.252-.244-.682-.139-.932.107-.23.226-.513.373-.816.53l-.102.054c-.338.178-.264.626.1.736a.476.476 0 0 0 .346-.027ZM7.741 9.808V9.78a.413.413 0 1 1 .783.183l-.22.443a.602.602 0 0 1-.12.167l-.193.185a.36.36 0 1 1-.5-.516l.112-.108a.453.453 0 0 0 .138-.326ZM5.672 12.5l.482.233A.386.386 0 1 0 6.32 12h-.416a.702.702 0 0 1-.419-.139l-.277-.206a.302.302 0 1 0-.298.52l.761.325Z"/>
+                                    <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM1.612 10.867l.756-1.288a1 1 0 0 1 1.545-.225l1.074 1.005a.986.986 0 0 0 1.36-.011l.038-.037a.882.882 0 0 0 .26-.755c-.075-.548.37-1.033.92-1.099.728-.086 1.587-.324 1.728-.957.086-.386-.114-.83-.361-1.2-.207-.312 0-.8.374-.8.123 0 .24-.055.318-.15l.393-.474c.196-.237.491-.368.797-.403.554-.064 1.407-.277 1.583-.973.098-.391-.192-.634-.484-.88-.254-.212-.51-.426-.515-.741a6.998 6.998 0 0 1 3.425 7.692 1.015 1.015 0 0 0-.087-.063l-.316-.204a1 1 0 0 0-.977-.06l-.169.082a1 1 0 0 1-.741.051l-1.021-.329A1 1 0 0 0 11.205 9h-.165a1 1 0 0 0-.945.674l-.172.499a1 1 0 0 1-.404.514l-.802.518a1 1 0 0 0-.458.84v.455a1 1 0 0 0 1 1h.257a1 1 0 0 1 .542.16l.762.49a.998.998 0 0 0 .283.126 7.001 7.001 0 0 1-9.49-3.409Z"/>
+                                </svg>
+                                <p class="card-title" style="color: #14AE5C">Bền vững</p>
+                            </div>
+                            <p class="card-body">Chúng tôi luôn cố gắng tìm nhiều cách khác
+                                nhau để bảo vệ tài nguyên thiên nhiên cho thế hệ tương lai. Từ nguyên liệu cho đến cách chế
+                                biến, mọi món ăn chúng tôi làm ra đều được đảm bảo tính bền vững, thân thiện với môi trường
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+            </div>
+        </div>
+    </div>
+    <div class="hidden" id="page-3">
+        <div class="page-content-container">
+            <div class="page-content">
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <h1 class="title" style="text-align: center; margin-bottom: 24px;">Thực đơn</h1>
+                <div class="filter-bar" id="filter-list">
+
+                </div>
+                <div class="product-container" id="product-list">
+                    
+                </div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+            </div>
+        </div>
+    </div>
+    <div class="hidden" id="page-4">
+        <div class="page-content-container">
+            <div class="page-content" id="cart">
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <h1 class="title" style="text-align: center; margin-bottom: 40px;">Giỏ hàng</h1>
+                <div class="cart-layout">
+                    <div class="info-cart">
+                        <div class="item-cart-container" id="cart-list">
+                            
+                        </div>
+                        <div class="info-user info-user-group">
+                            <div class="info-user-group-row">
+                                <div style="width: 100%">
+                                    <p>Họ và tên</p>
+                                    <input placeholder="Nguyễn Văn A" id="name">
+                                    <img src="./assets/image/ccardback1.jpg" class="hidden" id="image-card" alt=""
+                                        width="100%" style="margin-top: 4px;">
+                                </div>
+                                <div class="info-user-group" style="width: 100%">
+                                    <div style="width: 100%">
+                                        <p>Hình thức thanh toán<span class="required">*</span></p>
+                                        <select id="payment" onchange="paymentFunc()">
+                                            <option value="cash">Tiền mặt</option>
+                                            <option value="credit">Thẻ tín dụng</option>
+                                            <option value="debit">Thẻ ghi nợ</option>
+                                        </select>
+                                    </div>
+                                    <div class="hidden info-user-group" id='info-card'>
+                                        <input placeholder="Số thẻ" id="cardnum"
+                                            oninput="canOrder(); checkInputZero('cardnum')">
+                                        <div class="info-user-group-row">
+                                            <input placeholder="Ngày hết hạn" id="expire"
+                                                oninput="canOrder()">
+                                            <input placeholder="CVV" id="cvv"
+                                                oninput="canOrder(); checkInputZero('cvv')">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 100%">
+                                <p>Địa chỉ<span class="required">*</span></p>
+                                <input placeholder="420 Đường Phạm Đức Tuấn, Phường 6, Quận 9, Thành phố Hồ Chí Minh"
+                                    id="address" oninput="canOrder()">
+                            </div>
+                            <div class="info-user-group-row">
+                                <div style="width: 100%">
+                                    <p>Số điện thoại<span class="required">*</span></p>
+                                    <input placeholder="0987654321" id="phone" oninput="canOrder(); checkInputZero('phone')">
+                                </div>
+                                <div style="width: 100%">
+                                    <p>Email</p>
+                                    <input placeholder="minitokyorestaurant@gmail.com" id="email">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-display" id="info-display-cart">
+                        <div style="display: flex">
+                            <p class="info-display-title">Hoá đơn</p>
+                            <div id="loading" style="display: none">
+                                <img src="./assets/image/loading-gif.gif" alt=""
+                                    style="width: 36px; margin-top: 8px; margin-right: 8px">
+                            </div>
+                        </div>
+                        <div id="display">
+                            
+                        </div>
+                        <div id="paybutton">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+            </div>
+            <div class="page-content" id="banner" style="display: flex; flex-direction: column; align-items: center; width: 1024px">
+                <div class="info-banner">
+                    <div id="progress-bar">
+                        <div id="progress"></div>
+                    </div>
+                    <div class="delivery-section-container">
+                        <div class="delivery-section">
+                            <div>
+                                <div class="delivery-image-section">
+                                    <img src="./assets/image/food.png" alt="" id="delivery-image">
+                                    <div>
+                                        <p style="font-size: 40px; font-weight: 600; margin-top: 0; margin-bottom: 6px;">Giao
+                                            hàng</p>
+                                        <p><span class="blue">Thời gian dự kiến: </span>30 phút</p>
+                                    </div>
+                                </div>
+                                <div
+                                    style="margin-top: 8px; margin-bottom: 16px; background-color: #d0d0d0; height: 2px; width: 100%; border-radius: 1px">
+                                </div>
+                                <ul style="list-style-type:disc">
+                                    <li class="gray">Đơn hàng đang được chuẩn bị</li>
+                                    <li class="green">Đơn hàng đã được xác nhận</li>
+                                </ul>
+                                <div
+                                    style="margin-top: 16px; margin-bottom: 24px; background-color: #d0d0d0; height: 2px; width: 100%; border-radius: 1px">
+                                </div>
+                                <div id="info-delivery">
+                                    
+                                </div>
+                            </div>
+                            <button class="button button-warning" id="cancel-delivery" onclick="cancelDelivery()">Huỷ đơn</button>
+                        </div>
+                        <div class="info-display" id="info-display-delivery">
+                            <div style="display: flex">
+                                <p class="info-display-title">Hoá đơn</p>
+                            </div>
+                            <div id="delivery-cart">
+    
+                            </div>
+                            <div
+                                style="margin-bottom: 24px; background-color: #c0c0c0; height: 2px; width: 100%; border-radius: 1px">
+                            </div>
+                            <div id="display-delivery">
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hidden" id="page-search">
+        <div class="page-content-container">
+            <div class="page-content">
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <h1 class="title" style="text-align: center; margin-bottom: 24px;">Tìm kiếm</h1>
+                <div id="search-results" style="text-align: center; margin-bottom: 48px;">
+                    <p class="body">Kết quả tìm kiếm sẽ được hiển thị ở đây</p>
+                </div>
+                <div class="product-container" id="search-list">
+                    
+                </div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+            </div>
+        </div>
+    </div>
+    <div class="hidden" id="page-account">
+        <div class="page-content-container">
+            <div class="page-content" style="display: flex; flex-direction: column; align-items: center;">
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="avatar" id="account-settings-avatar" style="width: 96px; height: 96px"></div>
+                <h1 class="title centered" style="margin: 24px; font-size: 40px">Cài đặt tài khoản</h1>
+                <div class="account-settings-container">
+                    <div class="account-settings-section">
+                        <p>Username/email</p>
+                        <div class="account-settings-content">
+                            <input placeholder="Username hoặc email" id="new-username">
+                            <button class="button" onclick="changeUsername()">Thay đổi</button>
+                        </div>
+                    </div>
+                    <div class="account-settings-line"></div>
+                    <div class="account-settings-section">
+                        <p>Mật khẩu</p>
+                        <div class="account-settings-content">
+                            <input type="password" placeholder="Mật khẩu mới" id="new-password">
+                            <input type="password" placeholder="Xác nhận mật khẩu" id="confirm-password">
+                            <button class="button" onclick="changePassword()">Thay đổi</button>
+                        </div>
+                    </div>
+                    <div class="account-settings-line"></div>
+                    <div class="account-settings-section">
+                        <p>Xoá tài khoản</p>
+                        <div class="account-settings-content">
+                            <button class="button button-warning" onclick="deleteAccount()">Xoá tài khoản</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+            </div>
+        </div>
+    </div>
+    <div class="hidden" id="page-terms">
+        <div class="page-content-container">
+            <div class="page-content document">
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+                <p style="font-weight: 600; font-size: 36px; width: 100%; text-align: center;">Điều
+                    khoản & Điều kiện</p>
+                <p>Vui lòng đọc kỹ các điều khoản và điều kiện này ("điều khoản và điều
+                    kiện", "điều khoản") trước khi sử dụng trang web minitokyo.com ("trang web", "dịch vụ") do
+                    Mini Tokyo ("chúng tôi") điều hành.</p>
+                <p class="document-header">Điều kiện sử dụng</p>
+                <p>Bằng cách sử dụng trang web này, bạn xác nhận rằng bạn đã đọc và xem
+                    xét Thỏa thuận này và bạn đồng ý tuân thủ các điều khoản của nó. Nếu bạn không muốn bị ràng buộc
+                    bởi các điều khoản của Thỏa thuận này, bạn nên ngừng sử dụng trang web theo đó. Mini Tokyo chỉ
+                    cấp quyền sử dụng và truy cập trang web này, các sản phẩm và dịch vụ của nó cho những người đã
+                    chấp nhận các điều khoản của nó.</p>
+                <p class="document-header">Chính sách bảo mật</p>
+                <p>Trước khi bạn tiếp tục sử dụng trang web của chúng tôi, chúng tôi
+                    khuyên bạn nên đọc chính sách bảo mật của chúng tôi về việc thu thập dữ liệu người dùng của
+                    chúng tôi. Nó sẽ giúp bạn hiểu rõ hơn về thực hành của chúng tôi.</p>
+                <p class="document-header">Sở hữu trí tuệ</p>
+                <p>Bạn đồng ý rằng tất cả các tài liệu, sản phẩm và dịch vụ được cung
+                    cấp trên trang web này là tài sản của Mini Tokyo, các chi nhánh, giám đốc, cán bộ, nhân viên,
+                    đại lý, nhà cung cấp hoặc người cấp phép bao gồm tất cả bản quyền, bí mật thương mại, nhãn hiệu,
+                    bằng sáng chế và tài sản trí tuệ khác. Bạn cũng đồng ý rằng bạn sẽ không sao chép hoặc phân
+                    phối lại tài sản trí tuệ của Mini Tokyo theo bất kỳ cách nào, bao gồm đăng ký điện tử, kỹ thuật
+                    số hoặc nhãn hiệu mới.</p>
+                <p>Bạn cấp cho Mini Tokyo giấy phép không độc quyền và miễn phí bản
+                    quyền để hiển thị, sử dụng, sao chép, truyền và phát nội dung bạn tải lên và xuất bản. Đối với
+                    các vấn đề liên quan đến khiếu nại sở hữu trí tuệ, bạn nên liên hệ với công ty để đi đến thỏa
+                    thuận.</p>
+                <p class="document-header">Luật áp dụng</p>
+                <p>Bằng cách sử dụng trang web này, bạn đồng ý rằng luật pháp, bất kể
+                    các nguyên tắc của luật xung đột, sẽ chi phối các điều khoản và điều kiện này hoặc bất kỳ tranh
+                    chấp nào thuộc bất kỳ hình thức nào có thể xảy ra giữa Mini Tokyo và bạn, hoặc các đối tác kinh
+                    doanh và cộng sự của Mini Tokyo.</p>
+                <p class="document-header">Tranh chấp</p>
+                <p>Bất kỳ tranh chấp nào liên quan đến việc bạn sử dụng trang web này
+                    hoặc các sản phẩm bạn mua từ chúng tôi theo bất kỳ cách nào sẽ được phân xử bởi tòa án tiểu bang
+                    hoặc liên bang và bạn đồng ý với quyền tài phán và địa điểm độc quyền của các tòa án đó.</p>
+                <p class="document-header">Sự bồi thường</p>
+                <p>Bạn đồng ý bồi thường cho Mini Tokyo và các chi nhánh của nó, đồng
+                    thời giữ cho Mini Tokyo vô hại trước các khiếu nại và yêu cầu pháp lý có thể phát sinh từ việc
+                    bạn sử dụng hoặc sử dụng sai các dịch vụ của chúng tôi. Chúng tôi bảo lưu quyền chọn luật sư
+                    riêng của chúng tôi.</p>
+                <p class="document-header">Giới hạn trách nhiệm</p>
+                <p>Mini Tokyo không chịu trách nhiệm pháp lý đối với bất kỳ thiệt hại
+                    nào có thể xảy ra với bạn do việc bạn sử dụng sai mục đích trang web của chúng tôi.</p>
+                <p>Mini Tokyo có quyền chỉnh sửa, sửa đổi và thay đổi Thỏa thuận này
+                    bất cứ lúc nào. Chúng tôi sẽ thông báo cho người dùng của mình về những thay đổi này thông qua
+                    thư điện tử. Thỏa thuận này là sự hiểu biết giữa Mini Tokyo và người dùng, và điều này thay thế
+                    và thay thế tất cả các thỏa thuận trước đó liên quan đến việc sử dụng trang web này.</p>
+                <div class="responsive-space"></div>
+                <div class="responsive-space"></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-container page-content-container">
+        <div class="footer page-content">
+            <div class="footer-content">
+                <div style="position: relative;">
+                    <p class="title" style="color: #F24822; font-size: 36px; margin-top: 0; margin-bottom: 0; padding: 8px">Mini
+                        Tokyo</p>
+                    <a href="mailto:minitokyorestaurant@gmail.com" class="footer-body"><span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#0D99FF" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                            <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                        </svg>
+                    </span>minitokyorestaurant@gmail.com</a>
+                    <a href="tel:+84987654321" class="footer-body"><span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#14AE5C" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                        </svg>
+                    </span>0987654321</a>
+                    <p class="footer-body link" onclick="changePage('page-terms')">Điều khoản & Điều kiện</p>
+                </div>
+                <div
+                    style="display: flex; flex-direction: column; justify-content: space-around;">
+                    <p class="footer-title">Điều hướng</p>
+                    <p class="footer-body link" onclick="changePage('page-1')">Trang chủ</p>
+                    <p class="footer-body link" onclick="changePage('page-2')">Giới thiệu</p>
+                    <p class="footer-body link" onclick="changePage('page-3')">Thực đơn</p>
+                    <p class="footer-body link" onclick="changePage('page-4')">Giỏ hàng</p>
+                    <p class="footer-body link" onclick="changePage('page-search')">Tìm kiếm</p>
+                </div>
+                <div
+                    style="display: flex; flex-direction: column; justify-content: space-around;">
+                    <p class="footer-title">Kết nối</p>
+                    <p class="footer-body link" onclick="window.open('https://facebook.com', '_blank')"><span>
+                            <img src="./assets/image/facebook.png" alt="">
+                        </span>Facebook</p>
+                    <p class="footer-body link" onclick="window.open('https://instagram.com', '_blank')"><span>
+                            <img src="./assets/image/instagram.png" alt="">
+                        </span>Instagram</p>
+                    <p class="footer-body link" onclick="window.open('https://chat.zalo.me', '_blank')"><span>
+                            <img src="./assets/image/zalo.png" alt="">
+                        </span>Zalo</p>
+                    <p class="footer-body link" onclick="window.open('https://youtube.com', '_blank')"><span>
+                            <img src="./assets/image/youtube.png" alt="">
+                        </span>YouTube</p>
+                    <p class="footer-body link" onclick="window.open('https://tiktok.com', '_blank')"><span>
+                            <img src="./assets/image/tiktok.png" alt="">
+                        </span>TikTok</p>
+                </div>
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.576180678326!2d106.68758197532861!3d10.767110289381051!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752fcc92f65cd7%3A0x63db58da4a57d103!2sMindX!5e0!3m2!1svi!2s!4v1683452442157!5m2!1svi!2s"
+                            style="border: 0; border-radius: 12px; width: 100%; height: 100%" allowfullscreen=""
+                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+            <div class="footer-line"></div>
+            <p class="footer-body" style="margin-bottom: -10px">Bản quyền © 2023 Mini Tokyo. Bảo lưu mọi quyền.</p>
+        </div>
+    </div>
+    <script src="./main.js"></script>
+</body>
+
+</html>
