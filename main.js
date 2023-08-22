@@ -9,7 +9,6 @@ const filters = new Set(['Tất cả']);
 var taxPercentage = 0.05;
 var searchinput = document.getElementById("search");
 var searchinputmobile = document.getElementById("search-mobile");
-var currentPage = 'page-1';
 
 let productList = localStorage.getItem("productList");
 if (!productList) {
@@ -30,6 +29,11 @@ let orderHistory = localStorage.getItem("orderHistory");
 if (!orderHistory) {
     let orderHistoryFile = [];
     localStorage.setItem("orderHistory", JSON.stringify(orderHistoryFile));
+}
+let userInfo = localStorage.getItem("userInfo");
+if (!userInfo) {
+    let userInfoFile = [];
+    localStorage.setItem("userInfo", JSON.stringify(userInfoFile));
 }
 function loadScroll() {
     setTimeout(function () {
@@ -106,6 +110,18 @@ function loadAccount() {
         if (username.includes('@') && username.includes('.com')) {
             document.getElementById('email').value = username;
         }
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        userInfo.forEach((item) => {
+            if (username == item.username) {
+                document.getElementById('name').value = item.name;
+                document.getElementById('cardnum').value = item.cardnum;
+                document.getElementById('expire').value = item.expire;
+                document.getElementById('cvv').value = item.cvv;
+                document.getElementById('address').value = item.address;
+                document.getElementById('phone').value = item.phone;
+                document.getElementById('email').value = item.email;
+            }
+        });
     }
 }
 loadAccount();
@@ -135,10 +151,27 @@ function changeUsername() {
                 accountsJson.splice(index, 1, acc);
                 localStorage.setItem("Acc", JSON.stringify(accountsJson));
                 localStorage.setItem("userLogin", newUsername);
+                let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+                userInfo.forEach((item,infoIndex) => {
+                    if (username == item.username) {
+                        var info = {
+                            username: newUsername,
+                            name: item.name,
+                            cardnum: item.cardnum,
+                            expire: item.expire,
+                            cvv: item.cvv,
+                            address: item.address,
+                            phone: item.phone,
+                            email: item.email
+                        };
+                        userInfo.splice(infoIndex, 1, info);
+                        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+                    }
+                });
                 showNotification('changeusername');
                 setTimeout(function () {
                     location.reload();
-                }, 2000);
+                }, 1000);
             }
         });
     }
@@ -181,10 +214,18 @@ function deleteAccount() {
             if (username == item.username) {
                 accountsJson.splice(index, 1);
                 localStorage.setItem("Acc", JSON.stringify(accountsJson));
+                let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+                userInfo.forEach((item,infoIndex) => {
+                    if (username == item.username) {
+                        userInfo.splice(infoIndex, 1);
+                        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+                    }
+                });
                 showNotification('deleteaccount');
                 setTimeout(function () {
+                    changePage('page-1');
                     logout();
-                }, 2000);
+                }, 1000);
             }
         });
     }
@@ -394,17 +435,17 @@ function loadDetails(prodIndex) {
     <div class="modal-footer" style="padding: 20px !important; gap: 8px">
         <p class="details-body">Số lượng:</p>
         <div style="display: flex">
-            <button class="details-input-button details-input-minus" onclick="minusDetailsInput()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+            <div class="details-input-button details-input-minus" onclick="minusDetailsInput()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
                     <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                 </svg>
-            </button>
+            </div>
             <input class="details-input" id="details-input" oninput="checkInputNumber('details-input')" value="1">
-            <button class="details-input-button details-input-plus" onclick="plusDetailsInput()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+            <div class="details-input-button details-input-plus" onclick="plusDetailsInput()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                 </svg>
-            </button>
+            </div>
         </div>
         <button class="button button-modal-wide" data-bs-dismiss="modal" onclick="addProduct(${prodIndex},document.getElementById('details-input').value)">Thêm vào Giỏ hàng</button>
     </div>
@@ -641,6 +682,41 @@ function continuePayment() {
         });
         localStorage.setItem("orderHistory",JSON.stringify(parsedOrderHistory));
 
+        let loginStatus = localStorage.getItem("hadLogged");
+        if (loginStatus == "true") {
+            let username = localStorage.getItem('userLogin');
+            let name = document.getElementById('name').value;
+            let cardnum = document.getElementById('cardnum').value;
+            let expire = document.getElementById('expire').value;
+            let cvv = document.getElementById('cvv').value;
+            let address = document.getElementById('address').value;
+            let phone = document.getElementById('phone').value;
+            let email = document.getElementById('email').value;
+            let infoIndex = undefined;
+            let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            var info = {
+                username: username,
+                name: name,
+                cardnum: cardnum,
+                expire: expire,
+                cvv: cvv,
+                address: address,
+                phone: phone,
+                email: email
+            };
+            userInfo.forEach((item, index) => {
+                if (username == item.username) {
+                    infoIndex = index;
+                }
+            });
+            if (infoIndex == undefined) {
+                userInfo.push(info);
+            } else {
+                userInfo.splice(infoIndex, 1, info);
+            }
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        }
+
         let cartListFile = [];
         localStorage.setItem("cartList", JSON.stringify(cartListFile));
 
@@ -785,7 +861,6 @@ function toggleHamburger() {
 function changePage(pageNumber) {
     var pages = ['page-1', 'page-2', 'page-3', 'page-4', 'page-search', 'page-terms', 'page-account'];
     var currenttab = pageNumber + '-tab';
-    currentPage = pageNumber;
 
     for (let i = 0; i < (pages.length - 3); i++) {
         document.getElementById(pages[i] + '-tab').classList.replace("nav-bar-tab-selected", "nav-bar-tab");
@@ -805,4 +880,13 @@ function changePage(pageNumber) {
         document.getElementById('bar').classList = 'sticky';
     }
     window.scroll(0, 0);
+
+    localStorage.setItem("currentPage", pageNumber);
 }
+let currentPage = localStorage.getItem("currentPage");
+if (!currentPage) {
+    let page = 'page-1';
+    localStorage.setItem("currentPage", page);
+    currentPage = localStorage.getItem("currentPage");
+}
+changePage(currentPage);

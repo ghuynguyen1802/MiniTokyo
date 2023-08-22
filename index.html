@@ -208,24 +208,24 @@
             <div class="image-slideshow" id="slide-4" style="background: url('./assets/image/thomas-marban-EHK-EH1SRzQ-unsplash.jpg') no-repeat; background-position: center; background-size: cover;"></div>
             <div class="image-slideshow" id="slide-5" style="background: url('./assets/image/mahmoud-fawzy-BOJ8RP7-VQA-unsplash.jpg') no-repeat; background-position: center; background-size: cover;"></div>
             <div class="slideshow-space" style="position: absolute; top: 0; align-items: center">
-                <button class="slide-button-nav" id="back-slideshow" onclick="backSlide()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                <div class="slide-button-nav" id="back-slideshow" onclick="backSlide()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
                       </svg>
-                </button>
+                    </div>
                 <div style="width: 100%"></div>
-                <button class="slide-button-nav" id="forward-slideshow" onclick="forwardSlide()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                <div class="slide-button-nav" id="forward-slideshow" onclick="forwardSlide()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
                       </svg>
-                </button>
+                    </div>
             </div>
             <div class="slide-button-page-container">
-                <button class="slide-button-page on-slide" id="tab-slide-1" onclick="changeSlide(1)"></button>
-                <button class="slide-button-page" id="tab-slide-2" onclick="changeSlide(2)"></button>
-                <button class="slide-button-page" id="tab-slide-3" onclick="changeSlide(3)"></button>
-                <button class="slide-button-page" id="tab-slide-4" onclick="changeSlide(4)"></button>
-                <button class="slide-button-page" id="tab-slide-5" onclick="changeSlide(5)"></button>
+                <div class="slide-button-page on-slide" id="tab-slide-1" onclick="changeSlide(1)"></div>
+                <div class="slide-button-page" id="tab-slide-2" onclick="changeSlide(2)"></div>
+                <div class="slide-button-page" id="tab-slide-3" onclick="changeSlide(3)"></div>
+                <div class="slide-button-page" id="tab-slide-4" onclick="changeSlide(4)"></div>
+                <div class="slide-button-page" id="tab-slide-5" onclick="changeSlide(5)"></div>
             </div>
         </div>
         <div class="page-content-container" style="background-color: #f0f0f0">
@@ -303,9 +303,7 @@
                 <div class="product-container" id="product-list">
                     
                 </div>
-                <div class="responsive-space"></div>
-                <div class="responsive-space"></div>
-                <div class="responsive-space"></div>
+                <div style="height: 24px"></div>
             </div>
         </div>
     </div>
@@ -451,9 +449,7 @@
                 <div class="product-container" id="search-list">
                     
                 </div>
-                <div class="responsive-space"></div>
-                <div class="responsive-space"></div>
-                <div class="responsive-space"></div>
+                <div style="height: 24px"></div>
             </div>
         </div>
     </div>

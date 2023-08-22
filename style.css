@@ -165,7 +165,7 @@ img {
     transition: opacity 0.5s;
     position: fixed;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     z-index: 1042;
     background-color: #30303090;
 }
@@ -263,6 +263,8 @@ img {
     border: none;
     border-top-left-radius: 32px;
     border-bottom-left-radius: 32px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     font-size: 16px;
     padding: 12px;
     box-sizing: border-box;
@@ -325,7 +327,7 @@ img {
 #account-menu-dim {
     position: fixed;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     z-index: 1045;
 }
 
@@ -494,7 +496,7 @@ img {
     align-items: center;
     position: absolute;
     width: 100%;
-    height: 100vh;
+    height: 100svh;
     background-color: #00000070;
 }
 
@@ -510,7 +512,7 @@ img {
 #scroll-background-container {
     background-color: #909090;
     width: 100%;
-    height: 100vh;
+    height: 100svh;
 }
 
 #scroll-background {
@@ -518,7 +520,7 @@ img {
     background-position: center;
     background-size: cover;
     width: 100%;
-    height: 100vh;
+    height: 100svh;
 }
 
 .circle-image-container {
@@ -581,6 +583,7 @@ img {
     border-radius: 100%;
     -webkit-backdrop-filter: blur(64px);
     backdrop-filter: blur(64px);
+    color: black;
     background-color: #ffffff90;
     border: none;
 }
@@ -856,7 +859,9 @@ img {
     width: 40px;
     background-color: #e8e8e8;
     border: none;
+    border-radius: 0;
     outline: none;
+    padding: 0;
     text-align: center;
     font-size: 20px;
     font-weight: 600;
@@ -864,12 +869,17 @@ img {
 }
 
 .details-input-button {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
     transition: background-color 0.2s;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 40px;
     width: 40px;
+    color: black;
     background-color: #e8e8e8;
     border: none;
     font-size: 18px;
@@ -963,7 +973,7 @@ img {
 }
 
 .button-disabled:active {
-    scale: 100%;
+    scale: 100% !important;
 }
 
 .button-modal {
@@ -1078,6 +1088,7 @@ img {
     appearance: none;
     height: 48px;
     width: 100%;
+    color: black;
     border: 2px solid #d0d0d0;
     border-radius: 12px;
     font-size: 16px;

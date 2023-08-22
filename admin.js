@@ -1,5 +1,4 @@
 var notification = document.getElementById("notification");
-var currentPage = 'page-1';
 let loginStatus = localStorage.getItem("hadLogged");
 
 function showNotification(type) {
@@ -475,11 +474,28 @@ function changeAccount(accIndex) {
         }
         accountsJson.splice(accIndex, 1, acc);
         localStorage.setItem("Acc",JSON.stringify(accountsJson));
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        userInfo.forEach((item,infoIndex) => {
+            if (currentUsername == item.username) {
+                var info = {
+                    username: newUsername,
+                    name: item.name,
+                    cardnum: item.cardnum,
+                    expire: item.expire,
+                    cvv: item.cvv,
+                    address: item.address,
+                    phone: item.phone,
+                    email: item.email
+                };
+                userInfo.splice(infoIndex, 1, info);
+                localStorage.setItem("userInfo", JSON.stringify(userInfo));
+            }
+        });
         if (currentUsername == loginUsername) {
             localStorage.setItem("userLogin",newUsername);
             setTimeout(function () {
                 location.reload();
-            }, 2000);
+            }, 1000);
         }
         loadAllAccounts();
         showNotification('changeaccountinfo');
@@ -492,12 +508,19 @@ function deleteAccount(accIndex) {
         let usernamedelete = accountsJson[accIndex].username;
         accountsJson.splice(accIndex, 1);
         localStorage.setItem("Acc",JSON.stringify(accountsJson));
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        userInfo.forEach((item,infoIndex) => {
+            if (usernamedelete == item.username) {
+                userInfo.splice(infoIndex, 1);
+                localStorage.setItem("userInfo", JSON.stringify(userInfo));
+            }
+        });
         loadAllAccounts();
         showNotification('deleteaccount');
         if (username == usernamedelete) {
             setTimeout(function () {
                 logout();
-            }, 2000);
+            }, 1000);
         }
     }
 }
@@ -576,7 +599,6 @@ function toggleSidebar() {
 function changePage(pageNumber) {
     var pages = ['page-1', 'page-2', 'page-3'];
     var currenttab = pageNumber + '-tab';
-    currentPage = pageNumber;
 
     for (let i = 0; i < (pages.length); i++) {
         document.getElementById(pages[i] + '-tab').classList.replace("sidebar-tab-selected", "sidebar-tab");

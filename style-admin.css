@@ -22,7 +22,7 @@ img {
 
 .background {
     min-width: 100vw;
-    min-height: 100vh;
+    min-height: 100svh;
     position: relative;
 }
 
@@ -88,7 +88,7 @@ img {
 #sidebar-dim {
     position: absolute;
     width: 100vw;
-    height: 100vh;
+    height: 100svh;
     background-color: #30303090;
     z-index: 1031;
 }
@@ -98,7 +98,7 @@ img {
     padding: 16px;
     box-sizing: border-box;
     width: 288px;
-    height: 100vh;
+    height: 100svh;
     background-color: #e0e0e0;
     overflow-y: scroll;
     z-index: 1032;
@@ -184,7 +184,7 @@ img {
 
 .content {
     position: absolute;
-    height: 100vh;
+    height: 100svh;
     background-color: #f0f0f0;
     overflow-y: scroll;
 }
@@ -356,6 +356,7 @@ img {
     border-radius: 8px;
     font-size: 18px;
     font-weight: 600;
+    padding: 0;
     box-sizing: border-box;
     text-align: center;
 }
@@ -425,6 +426,7 @@ table input {
     outline: 1px solid #d0d0d0;
     font-size: 16px;
     padding: 12px;
+    border-radius: 0;
     box-sizing: border-box;
 }
 
