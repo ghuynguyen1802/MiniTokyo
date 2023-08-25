@@ -766,11 +766,14 @@ function loadDelivery() {
     }
 }
 function cancelDelivery() {
-    if (confirm("Để tránh tình trạng bom hàng, Mini Tokyo sẽ trừ 10% hoá đơn để huỷ đơn hàng. Bạn có chắc là bạn muốn huỷ đơn không?") == true) {
+    setTimeout(function () {
+        let cart = JSON.parse(localStorage.getItem('deliveryList'))[0].cart;
+        localStorage.setItem("cartList", JSON.stringify(cart));
+        
         let deliveryListFile = [];
         localStorage.setItem("deliveryList", JSON.stringify(deliveryListFile));
-        loadDelivery();
-    }
+        updateStatus();
+    }, 500);
 }
 function updateStatus() {
     loadCounter();

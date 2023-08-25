@@ -37,6 +37,58 @@
         </div>
         </div>
     </div>
+    <div class="modal fade" id="deliveryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Lý do Huỷ đơn</h1>
+            </div>
+            <div class="modal-body">
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio1" checked>
+                    <label class="form-check-label" for="radio1">
+                        Tôi muốn thay đổi thông tin cá nhân
+                    </label>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio2">
+                    <label class="form-check-label" for="radio2">
+                        Tôi muốn thay đổi món ăn
+                    </label>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio3">
+                    <label class="form-check-label" for="radio3">
+                        Thời gian giao hàng quá lâu
+                    </label>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio4">
+                    <label class="form-check-label" for="radio4">
+                        Tài xế yêu cầu tôi huỷ đơn
+                    </label>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio5">
+                    <label class="form-check-label" for="radio5">
+                        Tôi tìm thấy giá rẻ hơn ở chỗ khác
+                    </label>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio6">
+                    <label class="form-check-label" for="radio6">
+                        Tôi không còn nhu cầu nữa
+                    </label>
+                </div>
+                <span style="color: #F24822"><span style="font-weight: 600;">LƯU Ý: </span>Để tránh tình trạng bom hàng, Mini Tokyo sẽ trừ 10% hoá đơn để huỷ đơn hàng trong trường hợp bạn thay đổi món ăn hoặc tự quyết định không đặt nữa. Bạn có chắc là bạn muốn huỷ đơn không?</span>
+            </div>
+            <div class="modal-footer">
+                <button class="button button-secondary button-modal" id="cancelDeliveryModal" data-bs-dismiss="modal">Thoát</button>
+                <button class="button button-modal" data-bs-dismiss="modal" onclick="cancelDelivery()">Huỷ đơn</button>
+            </div>
+        </div>
+        </div>
+    </div>
     <ul class="fixed" id="bar">
         <div class="bar-content">
             <li class="nav-bar-tab" id="hamburger" onclick="toggleHamburger()">
@@ -415,7 +467,7 @@
                                     
                                 </div>
                             </div>
-                            <button class="button button-warning" id="cancel-delivery" onclick="cancelDelivery()">Huỷ đơn</button>
+                            <button class="button button-warning" id="cancel-delivery" data-bs-toggle="modal" data-bs-target="#deliveryModal">Huỷ đơn</button>
                         </div>
                         <div class="info-display" id="info-display-delivery">
                             <div style="display: flex">
